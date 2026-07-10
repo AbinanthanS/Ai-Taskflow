@@ -1,32 +1,28 @@
-############ ----- FRONTEND ----- #########
+# ==================================
+# OS Files
+# ==================================
+.DS_Store
+Thumbs.db
 
+# ==================================
+# Editor Settings
+# ==================================
+.vscode/
+.idea/
+
+# ==================================
 # Logs
-Frontend/UI/logs/
-Frontend/UI/*.log
-Frontend/UI/npm-debug.log*
-Frontend/UI/yarn-debug.log*
-Frontend/UI/yarn-error.log*
-Frontend/UI/pnpm-debug.log*
-Frontend/UI/lerna-debug.log*
+# ==================================
+*.log
 
-# Dependencies / Build
-Frontend/UI/node_modules/
-Frontend/UI/dist/
-Frontend/UI/dist-ssr/
-Frontend/UI/*.local
+# ==================================
+# Environment Files (if you ever add one at the root)
+# ==================================
+.env
+.env.*
 
-# Editor / OS
-Frontend/UI/.vscode/*
-!Frontend/UI/.vscode/extensions.json
-Frontend/UI/.idea/
-Frontend/UI/.DS_Store
-Frontend/UI/*.suo
-Frontend/UI/*.ntvs*
-Frontend/UI/*.njsproj
-Frontend/UI/*.sln
-Frontend/UI/*.sw?
-
-# Environment
-Frontend/UI/.env
-Frontend/UI/.env.*
-!Frontend/UI/.env.example
+# ==================================
+# Temporary Files
+# ==================================
+*.tmp
+*.temp
