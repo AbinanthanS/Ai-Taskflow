@@ -1,7 +1,5 @@
 import { motion } from "framer-motion";
-import {
-  Sparkles, Users, LayoutGrid, GitBranch, FileText, Command,
-} from "lucide-react";
+import {Sparkles, Users, LayoutGrid, GitBranch, FileText, Command} from "lucide-react";
 import SectionHeading from "./SectionHeading";
 import DrawIcon from "./DrawIcon";
 
