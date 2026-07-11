@@ -56,12 +56,12 @@ CREATE TABLE IF NOT EXISTS tasks(
 
 
 CREATE TABLE IF NOT EXISTS activities(
-    id  UUID PRIMARY KEY DEFAULT gen_random_uuid(),
-    board_id UUID NOT NULL REFERENCES boards(id) ON DELETE CASCADE,
-    user_id  UUID REFERENCES users(id) ON DELETE CASCADE,
-    action  TEXT NOT NULL,
-    message TEXT NOT NULL,
-    metadata JSONB,
+    id         UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+    board_id   UUID NOT NULL REFERENCES boards(id) ON DELETE CASCADE,
+    user_id    UUID REFERENCES users(id) ON DELETE CASCADE,
+    action     TEXT NOT NULL,
+    message    TEXT NOT NULL,
+    metadata   JSONB,
     created_at TIMESTAMPTZ NOT NULL DEFAULT now()
 );
 
