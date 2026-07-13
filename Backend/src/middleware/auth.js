@@ -1,7 +1,7 @@
 const { verifyToken } = require("../utils/jwt");
 const ApiError = require("../utils/ApiError");
 
-const requireAuth = (req, _req, next) => {
+const requireAuth = (req, _res, next) => {
     try{
         const header = req.headers.authorization || "";
         const token = header.startsWith("Bearer ") ? header.slice(7) : null;
