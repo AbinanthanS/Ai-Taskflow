@@ -104,7 +104,7 @@ const createTask = asyncHandler(async(req, res) => {
 });
 
 
-const updateTasks = asyncHandler(async (req,res) => {
+const updateTask = asyncHandler(async (req,res) => {
     const { title, description, priority, due_date, assignee_id } = req.body;
     if (priority !== undefined && !PRIORITIES.includes(priority))
         throw ApiError.badRequest("Invalid priority");
@@ -136,7 +136,7 @@ const updateTasks = asyncHandler(async (req,res) => {
     res.json({ task });
 });
 
-const moveTasks = asyncHandler(async (req, res) => {
+const moveTask = asyncHandler(async (req, res) => {
     const { column_id, position } = req.body;
     if (!column_id || position === undefined)
         throw ApiError.badRequest("column_id and position are required"); 
@@ -174,7 +174,7 @@ const moveTasks = asyncHandler(async (req, res) => {
 }); 
 
 
-const deleteTasks = asyncHandler(async(req,res) => {
+const deleteTask = asyncHandler(async(req,res) => {
     const { rows } = await query(
         "DELETE FROM tasks WHERE id = $1 AND board_id = $2 RETURNING title",
         [req.params.taskId, req.board.id],
@@ -192,4 +192,4 @@ const deleteTasks = asyncHandler(async(req,res) => {
     res.json({ success: true });
 });
 
-module.exports = { listTasks, createTask, updateTasks, moveTasks, deleteTasks };
+module.exports = { listTasks, createTask, updateTask, moveTask, deleteTask };
