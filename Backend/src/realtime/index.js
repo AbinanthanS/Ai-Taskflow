@@ -6,7 +6,7 @@ const setIo = (instance) => {
     io = instance;
 };
 
-const boardRoom = (boardID) => `board:${boardId}`;
+const boardRoom = (boardId) => `board:${boardId}`;
 
 const emitToBoard = (boardId, event, payload) => {
     if (io) io.to(boardRoom(boardId)).emit(event, payload);
@@ -26,7 +26,7 @@ const logActivity = async({ boardId, userId, action, message, metadata }) => {
          ],
     );
     const activity = rows[0];
-    emitToBoardId(boardId, "activity: new", activity);
+    emitToBoard(boardId, "activity:new", activity);
     return activity;
 };
 

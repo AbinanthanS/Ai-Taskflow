@@ -1,6 +1,6 @@
 const express = require("express");
 const { requireAuth } = require("../middleware/auth");
-const { requireBoardaccess, requireBoardAccess } = require("../middleware/boardAccess");
+const { requireBoardAccess } = require("../middleware/boardAccess");
 const board = require("../controllers/boardController");
 const column = require("../controllers/columnController");
 const task = require("../controllers/taskController");

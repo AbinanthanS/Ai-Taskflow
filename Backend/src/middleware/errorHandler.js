@@ -4,7 +4,7 @@ const errorHandler = (err, _req,res,_next) => {
     if (status >= 500) console.error("Server error: ", err);
     if (err.code === "23505") return res.status(409).json({error: "Resources already exists"});
     res.status(status).json({
-        error: status >= 500 ? "Internet server error":err.message,
+        error: status >= 500 ? "Internal server error":err.message,
     });
 };
 
