@@ -27,7 +27,7 @@ export const columnAccent = (index = 0) =>
   COLUMN_ACCENTS[((index % COLUMN_ACCENTS.length) + COLUMN_ACCENTS.length) % COLUMN_ACCENTS.length];
 
 export const initials = (name = "") =>
-  name
+  (name || "")
     .trim()
     .split(/\s+/)
     .slice(0, 2)

@@ -12,21 +12,16 @@
 //      That's the only file you touch to go live.
 // ----------------------------------------------------------------------------
 
-import * as mock from "./mockData";
 
 const TOKEN_KEY = "kanban_token";
 export const getToken = () => localStorage.getItem(TOKEN_KEY);
 export const setToken = (t) => localStorage.setItem(TOKEN_KEY, t);
 export const clearToken = () => localStorage.removeItem(TOKEN_KEY);
 
-/* ============================================================================
- * REAL API  —  uncomment this whole block once the backend is built
- * ==========================================================================*/
-/*
 import axios from "axios";
 
 const api = axios.create({
-  baseURL: import.meta.env.VITE_API_URL || "http://localhost:5050/api",
+  baseURL: import.meta.env.VITE_API_URL || "http://localhost:5000/api",
 });
 
 api.interceptors.request.use((config) => {
@@ -102,122 +97,4 @@ export const aiApi = {
     api.post(`/boards/${boardId}/ai/breakdown`, data).then((r) => r.data.subtasks),
   summary: (boardId) => api.post(`/boards/${boardId}/ai/summary`).then((r) => r.data.summary),
 };
-*/
 
-/* ============================================================================
- * MOCK API  —  delete this block once the REAL API above is live.
- * Each method mirrors the real one's return shape, with a small delay so the
- * loading states still show.
- * ==========================================================================*/
-const delay = (ms = 350) => new Promise((res) => setTimeout(res, ms));
-
-export const authApi = {
-  register: async () => {
-    await delay();
-    return { user: mock.currentUser, token: "mock-token" };
-  },
-  login: async () => {
-    await delay();
-    return { user: mock.currentUser, token: "mock-token" };
-  },
-  me: async () => {
-    await delay(150);
-    return mock.currentUser;
-  },
-};
-
-export const userApi = {
-  search: async (q) => {
-    await delay();
-    return mock.searchUsers(q);
-  },
-};
-
-export const boardApi = {
-  list: async () => {
-    await delay();
-    return mock.boards;
-  },
-  create: async (data) => {
-    await delay();
-    return mock.createBoard(data);
-  },
-  get: async (id) => {
-    await delay();
-    return mock.getBoardDetail(id);
-  },
-  update: async (id, data) => {
-    await delay();
-    return mock.updateBoard(id, data);
-  },
-  remove: async () => {
-    await delay();
-    return { success: true };
-  },
-  activity: async (id) => {
-    await delay();
-    return mock.activitiesFor(id);
-  },
-  addMember: async (id, data) => {
-    await delay();
-    return mock.addMember(data);
-  },
-  removeMember: async () => {
-    await delay();
-    return { success: true };
-  },
-};
-
-export const columnApi = {
-  create: async (boardId, data) => {
-    await delay();
-    return mock.createColumn(boardId, data);
-  },
-  update: async (boardId, columnId, data) => {
-    await delay();
-    return { id: columnId, board_id: boardId, ...data };
-  },
-  remove: async () => {
-    await delay();
-    return { success: true };
-  },
-};
-
-export const taskApi = {
-  list: async (boardId) => {
-    await delay();
-    return mock.getBoardDetail(boardId).tasks;
-  },
-  create: async (boardId, data) => {
-    await delay();
-    return mock.createTask(boardId, data);
-  },
-  update: async (boardId, taskId, data) => {
-    await delay();
-    return mock.updateTask(boardId, taskId, data);
-  },
-  move: async (boardId, taskId, data) => {
-    await delay();
-    return { id: taskId, board_id: boardId, ...data };
-  },
-  remove: async () => {
-    await delay();
-    return { success: true };
-  },
-};
-
-export const aiApi = {
-  generateTasks: async (boardId, data) => {
-    await delay(900);
-    return mock.aiGenerate(boardId, data);
-  },
-  breakdown: async () => {
-    await delay(900);
-    return mock.aiBreakdown();
-  },
-  summary: async () => {
-    await delay(900);
-    return mock.aiSummary();
-  },
-};
-/* ======================================================================== */

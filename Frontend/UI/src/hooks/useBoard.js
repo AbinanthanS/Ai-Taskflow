@@ -118,21 +118,29 @@ export const useBoard = (boardId) => {
   );
 
   const updateTask = useCallback(
-    async (taskId, data) => {
-      const prev = tasks.find((t) => t.id === taskId);
-      upsertTask({ ...prev, ...data }); // optimistic
-      try {
-        const task = await taskApi.update(boardId, taskId, data);
-        upsertTask(task);
-        return task;
-      } catch (err) {
-        if (prev) upsertTask(prev);
-        toast.error(err.message);
-        throw err;
-      }
-    },
-    [boardId, tasks, upsertTask]
-  );
+  async (taskId, data) => {
+    const prev = tasks.find((t) => t.id === taskId);
+    const assignee = data.assignee_id
+      ? members.find((m) => m.id === data.assignee_id)
+      : null;
+    upsertTask({
+      ...prev,
+      ...data,
+      assignee_name: assignee?.name ?? null,
+      assignee_avatar: assignee?.avatar_url ?? null,
+    });
+    try {
+      const task = await taskApi.update(boardId, taskId, data);
+      upsertTask(task);
+      return task;
+    } catch (err) {
+      if (prev) upsertTask(prev);
+      toast.error(err.message);
+      throw err;
+    }
+  },
+  [boardId, tasks, members, upsertTask]
+);
 
   const deleteTask = useCallback(
     async (taskId) => {
