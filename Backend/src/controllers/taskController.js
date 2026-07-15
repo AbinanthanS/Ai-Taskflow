@@ -5,7 +5,7 @@ const { emitToBoard, logActivity } = require("../realtime");
 
 const PRIORITIES = ["low", "medium", "high", "urgent"];
 
-const fetchTasks = async (taskId) => {
+const fetchTask = async (taskId) => {
     const { rows } = await query(
         `SELECT t.*,
                 a.name AS assignee_name, a.email AS assignee_email, a.avatar_url AS assignee_avatar
@@ -113,7 +113,7 @@ const updateTask = asyncHandler(async (req,res) => {
         `UPDATE tasks
             SET title        = COALESCE($3, title),
                 description  = COALESCE($4, description),
-                priority     = COALESCE($5, priority)
+                priority     = COALESCE($5, priority),
                 due_date     = COALESCE($6, due_date),
                 assignee_id  = $7,
                 updated_at   = now()
@@ -157,7 +157,7 @@ const moveTask = asyncHandler(async (req, res) => {
           [req.params.taskId, req.board.id, column_id, position]
     );
 
-    const task = await fetchTasks(rows[0].id);
+    const task = await fetchTask(rows[0].id);
     emitToBoard(req.board.id, "task:moved", task);
 
     if (movedColumns){

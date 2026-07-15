@@ -2,12 +2,12 @@ const { Server } = require("socket.io");
 const { verifyToken } = require("../utils/jwt");
 const { query } = require("../config/db");
 const { setIo, boardRoom } = require("../realtime");
-const { use } = require("react");
 
-const userCanAccessBoard = async (useId, boardId) => {
+
+const userCanAccessBoard = async (userId, boardId) => {
     const { rows } = await query(
         `SELECT 1 FROM boards b
-           LEFT JOIN boards_members m ON m.board_id = b.id AND m.user_id = $2
+           LEFT JOIN board_members m ON m.board_id = b.id AND m.user_id = $2
           WHERE b.id = $1 AND (b.owner_id = $2 OR m.user_id = $2)`,
           [boardId, userId]
     );
@@ -40,7 +40,7 @@ const initSocket = (httpServer) => {
     io.on("connection", (socket) => {
         const { user } = socket;
 
-        socket.on("board: join", async (boardId, ack) => {
+        socket.on("board:join", async (boardId, ack) => {
             try{
                 if (!(await userCanAccessBoard(user.id, boardId))){
                     if (ack) ack({ ok: false, error: "No access to this board "});
@@ -49,7 +49,7 @@ const initSocket = (httpServer) => {
                 const room = boardRoom(boardId);
                 socket.join(room);
 
-                socket.to(room).emit("presence: join", {
+                socket.to(room).emit("presence:join", {
                     user: { id: user.id, name: user.name },
                     boardId,
                 });
